@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+data/taxi_clean.csv
+models/*.keras
+.pytest_cache/

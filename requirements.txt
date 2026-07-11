@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+fastapi
+uvicorn
+pydantic
+pytest
+pylint
+httpx
+joblib
+pytest-mock

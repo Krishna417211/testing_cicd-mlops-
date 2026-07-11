@@ -1,0 +1,23 @@
+artifact_path: file:///C:/Users/DELL/Downloads/taxi-project/taxi-project/mlruns/2/models/m-3c3eb2d4bafb44dfb93cc60a28406132/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.11.9
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.7.2
+    skops_trusted_types: null
+mlflow_version: 3.14.0
+model_id: m-3c3eb2d4bafb44dfb93cc60a28406132
+model_size_bytes: 7330
+model_uuid: m-3c3eb2d4bafb44dfb93cc60a28406132
+prompts: null
+run_id: c82bbf7f592c400aaa8c1b1a0e10568f
+utc_time_created: '2026-07-11 05:16:03.495370'
