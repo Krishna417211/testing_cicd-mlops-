@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+    permissions:
+      contents: read
+      packages: write
+      
 jobs:
   # Step 1: lint + test
   test:
@@ -78,5 +82,5 @@ jobs:
         run: |
           IMAGE=ghcr.io/${{ github.repository }}
           IMAGE=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
-          docker tag taxi-api $IMAGE:latest
+          docker tag taxi-fare-api $IMAGE:latest
           docker push $IMAGE:latest
