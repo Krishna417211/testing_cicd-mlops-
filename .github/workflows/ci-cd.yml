@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: model
-          path: models/taxi_model.keras
+          path: models/taxi_model.pkl
 
   # Step 3: build image + deploy
   deploy:

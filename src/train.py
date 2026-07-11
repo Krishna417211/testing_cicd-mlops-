@@ -11,7 +11,7 @@ FEATURES = ["passenger_count", "trip_distance", "fare_amount", "tip_amount"]
 TARGET = "total_amount"
 
 
-def load_data(path="data/sample.csv"):
+def load_data(path="data/taxi_clean.csv"):
     """Load features and target from the CSV."""
     df = pd.read_csv(path)
     x = df[FEATURES]

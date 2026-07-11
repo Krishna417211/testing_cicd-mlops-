@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
 data/taxi_clean.csv
-models/*.keras
+models/*.pkl
+mlruns/
+mlflow.db
 .pytest_cache/

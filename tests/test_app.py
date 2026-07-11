@@ -33,7 +33,3 @@ def test_predict(mocker):
     resp = client.post("/predict", json=payload)
     assert resp.status_code == 200
     assert resp.json()["total_amount"] == 15.0
-
-
-
-    
