@@ -9,3 +9,4 @@ pylint
 httpx
 joblib
 pytest-mock
+mlflow
