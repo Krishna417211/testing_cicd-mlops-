@@ -1,8 +1,7 @@
-"""Train a taxi fare model using LinearRegression and log to MLflow."""
+"""Train a taxi fare model using LinearRegression."""
+
 import joblib
 import pandas as pd
-import mlflow
-import mlflow.sklearn
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -15,54 +14,58 @@ TARGET = "total_amount"
 def load_data(path="data/sample.csv"):
     """Load features and target from the CSV."""
     df = pd.read_csv(path)
-    features = df[FEATURES]
-    target = df[TARGET]
-    return features, target
+    X = df[FEATURES]
+    y = df[TARGET]
+    return X, y
 
 
-def train_model(x_train, y_train):
-    """Fit a LinearRegression model."""
+def split_data():
+    """Split the dataset into training and testing sets."""
+    X, y = load_data()
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        random_state=42
+    )
+
+    return X_train, X_test, y_train, y_test
+
+
+def train_model(X_train, y_train):
+    """Train the Linear Regression model."""
     model = LinearRegression()
-    model.fit(x_train, y_train)
+    model.fit(X_train, y_train)
     return model
 
 
-def evaluate_model(model, x_test, y_test):
-    """Return the R2 score on the test set."""
-    predictions = model.predict(x_test)
-    return r2_score(y_test, predictions)
+def evaluate_model(model, X_test, y_test):
+    """Evaluate the model using the R² score."""
+    predictions = model.predict(X_test)
+    score = r2_score(y_test, predictions)
+    return score
+
+
+def save_model(model, path="models/taxi_model.pkl"):
+    """Save the trained model."""
+    joblib.dump(model, path)
 
 
 def main():
-    """Full training flow: load, split, train, log to MLflow, save."""
-    features, target = load_data()
+    """Main function."""
+    X_train, X_test, y_train, y_test = split_data()
 
-    x_train, x_test, y_train, y_test = train_test_split(
-        features, target, test_size=0.25, random_state=42
-    )
+    model = train_model(X_train, y_train)
 
-    model = train_model(x_train, y_train)
-    r2 = evaluate_model(model, x_test, y_test)
+    score = evaluate_model(model, X_test, y_test)
 
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
-    mlflow.set_experiment("taxi_experiment")
+    save_model(model)
 
-    with mlflow.start_run():
-        mlflow.log_metric("accuracy", r2)
-        mlflow.sklearn.log_model(
-            sk_model=model,
-            artifact_path="taxi_model",
-            registered_model_name="taxi_model",
-        )
-        print("logged in")
-
-    joblib.dump(model, "models/taxi_model.pkl")
-    print(f"R2: {r2:.4f}")
-    print("Model saved")
+    print(f"R² Score: {score:.4f}")
+    print("Model saved successfully.")
+    print("Model training completed.")
 
 
 if __name__ == "__main__":
     main()
-
-
-print('Model training completed')
