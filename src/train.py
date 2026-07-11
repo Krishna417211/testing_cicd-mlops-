@@ -14,35 +14,35 @@ TARGET = "total_amount"
 def load_data(path="data/sample.csv"):
     """Load features and target from the CSV."""
     df = pd.read_csv(path)
-    X = df[FEATURES]
+    x = df[FEATURES]
     y = df[TARGET]
-    return X, y
+    return x, y
 
 
 def split_data():
     """Split the dataset into training and testing sets."""
-    X, y = load_data()
+    x, y = load_data()
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X,
+    x_train, x_test, y_train, y_test = train_test_split(
+        x,
         y,
         test_size=0.2,
         random_state=42
     )
 
-    return X_train, X_test, y_train, y_test
+    return x_train, x_test, y_train, y_test
 
 
-def train_model(X_train, y_train):
+def train_model(x_train, y_train):
     """Train the Linear Regression model."""
     model = LinearRegression()
-    model.fit(X_train, y_train)
+    model.fit(x_train, y_train)
     return model
 
 
-def evaluate_model(model, X_test, y_test):
+def evaluate_model(model, x_test, y_test):
     """Evaluate the model using the R² score."""
-    predictions = model.predict(X_test)
+    predictions = model.predict(x_test)
     score = r2_score(y_test, predictions)
     return score
 
@@ -54,11 +54,11 @@ def save_model(model, path="models/taxi_model.pkl"):
 
 def main():
     """Main function."""
-    X_train, X_test, y_train, y_test = split_data()
+    x_train, x_test, y_train, y_test = split_data()
 
-    model = train_model(X_train, y_train)
+    model = train_model(x_train, y_train)
 
-    score = evaluate_model(model, X_test, y_test)
+    score = evaluate_model(model, x_test, y_test)
 
     save_model(model)
 
